@@ -8,11 +8,11 @@
         </point>
         <point>
             <value>0.8615196078431</value> <!-- 3515/4080 -->
-            <nits>498.0</nits>
+            <nits>500.0</nits>
         </point>
         <point>
             <value>1.0</value>
-            <nits>998.0</nits>
+            <nits>1000.0</nits>
         </point>
     </screenBrightnessMap>
     <highBrightnessMode enabled="true">
