@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--- Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.            -->
+<!---                                                                           -->
+<!--- Redistribution and use in source and binary forms, with or without        -->
+<!--- modification, are permitted provided that the following conditions are    -->
+<!--- met:                                                                      -->
+<!---     * Redistributions of source code must retain the above copyright      -->
+<!---       notice, this list of conditions and the following disclaimer.       -->
+<!---     * Redistributions in binary form must reproduce the above             -->
+<!---       copyright notice, this list of conditions and the following         -->
+<!---       disclaimer in the documentation and/or other materials provided     -->
+<!---       with the distribution.                                              -->
+<!---     * Neither the name of The Linux Foundation nor the names of its       -->
+<!---       contributors may be used to endorse or promote products derived     -->
+<!---       from this software without specific prior written permission.       -->
+<!---                                                                           -->
+<!--- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED              -->
+<!--- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF      -->
+<!--- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT    -->
+<!--- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS    -->
+<!--- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR    -->
+<!--- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF      -->
+<!--- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR           -->
+<!--- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,     -->
+<!--- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE      -->
+<!--- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN    -->
+<!--- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                             -->
+
+<audio_effects_conf version="2.0" xmlns="http://schemas.android.com/audio/audio_effects_conf/v2_0">
+    <libraries>
+    <!--DOLBY DAP-->
+        <library name="dap_sw" path="libswdap.so"/>
+        <library name="dap_hw" path="libhwdap.so"/>
+    <!--DOLBY END-->
+    <!--DOLBY DAP (dvl)-->
+        <library name="dvl" path="libdlbvol.so"/>
+    <!--DOLBY END-->
+    <!--DOLBY SPATIALIZER-->
+        <library name="dolby_spatializer" path="libswspatializer.so"/>
+    <!--DOLBY END-->
+    <!--DOLBY GAME-->
+        <library name="gamedap" path="libswgamedap.so"/>
+    <!--DOLBY END-->
+    <!--DOLBY VQE-->
+        <library name="vqe" path="libswvqe.so"/>
+    <!--DOLBY END-->
+	<!--Spatial Audio-->
+        <library name="spatializer" path="libspatialaudio.so"/>
+	<!--Spatial Audio-->
+    </libraries>
+    <effects>
+    <!--DOLBY DAP-->
+        <effectProxy name="dap" library="proxy" uuid="9d4921da-8225-4f29-aefa-39537a04bcaa">
+            <libsw library="dap_sw" uuid="6ab06da4-c516-4611-8166-452799218539"/>
+            <libhw library="dap_hw" uuid="a0c30891-8246-4aef-b8ad-d53e26da0253"/>
+        </effectProxy>
+    <!--DOLBY END-->
+    <!--DOLBY DAP (dvl)-->
+        <effect name="dlb_music_listener" library="dvl" uuid="40f66c8b-5aa5-4345-8919-53ec431aaa98"/>
+        <effect name="dlb_ring_listener" library="dvl" uuid="21d14087-558a-4f21-94a9-5002dce64bce"/>
+        <effect name="dlb_alarm_listener" library="dvl" uuid="6aff229c-30c6-4cc8-9957-dbfe5c1bd7f6"/>
+        <effect name="dlb_system_listener" library="dvl" uuid="874db4d8-051d-4b7b-bd95-a3bebc837e9e"/>
+        <effect name="dlb_notification_listener" library="dvl" uuid="1f0091e3-6ad8-40fe-9b09-5948f9a26e7e"/>
+    <!--DOLBY END-->
+    <!--DOLBY SPATIALIZER-->
+        <effect name="spatializer" library="dolby_spatializer" uuid="ccd4cf09-a79d-46c2-9aae-06a1698d6c8f"/>
+    <!--DOLBY END-->
+    <!--DOLBY GAME-->
+        <effect name="gamedap" library="gamedap" uuid="3783c334-d3a0-4d13-874f-0032e5fb80e2"/>
+    <!--DOLBY END-->
+    <!--DOLBY VQE-->
+        <effect name="vqe" library="vqe" uuid="64a0f614-7fa4-48b8-b081-d59dc954616f"/>
+    <!--DOLBY END-->
+	<!--Spatial Audio-->
+        <effect name="spatializer" library="spatializer" uuid="cc4677de-ff72-11eb-9a03-0242ac130003"/>
+	<!--Spatial Audio-->
+    </effects>
+    <postprocess>
+        <stream type="system">
+            <apply effect="dlb_system_listener"/>
+        </stream>
+        <stream type="music">
+            <!-- Disable volume listener
+            <apply effect="dlb_music_listener"/>
+            -->
+        </stream>
+        <stream type="ring">
+            <apply effect="dlb_ring_listener"/>
+        </stream>
+        <stream type="alarm">
+            <apply effect="dlb_alarm_listener"/>
+        </stream>
+        <stream type="voice_call">
+            <apply effect="voice_helper"/>
+        </stream>
+        <stream type="notification">
+            <apply effect="dlb_notification_listener"/>
+        </stream>
+    </postprocess>
+</audio_effects_conf>
